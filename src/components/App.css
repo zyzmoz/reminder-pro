@@ -2,3 +2,11 @@ body {
     text-align: center;
     margin: 0 auto;
 }
+
+.form-control {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.btn {
+    border-radius: 0px 5px 5px 0px;
+}

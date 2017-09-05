@@ -39,9 +39,16 @@ class App extends Component{
     }
 };
 
+//Mapping State to Props
+function mapStateToProps(state){    
+    return {
+        reminders: state
+    }
+}
+
 //match functions with props
 function mapDispatchToProps(dispatch){
     return bindActionCreators({addReminder}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

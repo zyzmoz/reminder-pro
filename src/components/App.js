@@ -15,7 +15,32 @@ class App extends Component{
 
     addReminder(){
         console.log('this', this);    
-        this.props.addReminder(this.state.text);
+        if (this.state.text !== '')
+          this.props.addReminder(this.state.text);
+        this.setState({text:''});
+        
+    }
+
+    renderReminders() {
+        const { reminders } = this.props;
+        return (            
+            <ul className="list-group">
+                {
+                    reminders.map(reminder => {
+                        return (
+                            <li className="list-group-item" key={reminder.id}>
+                                <div className="grouping">
+                                    {reminder.text}
+                                    <button className="btn btn-danger">Delete</button>
+                                </div>
+                                
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+            
+        )
     }
 
     render(){
@@ -24,15 +49,19 @@ class App extends Component{
                 <div className="title">
                     Reminder PRO
                 </div>
-                <div className="form-inline">
+                <div className="form-inline ">
                     <div className="form-group">
                         <input
                             className="form-control"
                             placeholder="I have to..."
                             onChange={e => this.setState({text: e.target.value})}
-                        />
+                            value={this.state.text}
+                        />                        
                     </div>
-                    <button type="button" className="btn btn-success" onClick={() => this.addReminder()}>Add Reminder!</button>
+                    <button type="button" className="btn btn-success add" onClick={() => this.addReminder()}>Add Reminder!</button>                    
+                </div>
+                <div className="data">
+                    { this.renderReminders() }
                 </div>
             </div>
         )

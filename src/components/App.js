@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addReminder } from '../actions';
+import { addReminder, deleteReminder } from '../actions';
 
 class App extends Component{
     constructor(props){
@@ -21,6 +21,10 @@ class App extends Component{
         
     }
 
+    deleteReminder(id){
+        this.props.deleteReminder(id);
+    }
+
     renderReminders() {
         const { reminders } = this.props;
         return (            
@@ -31,7 +35,7 @@ class App extends Component{
                             <li className="list-group-item" key={reminder.id}>
                                 <div className="grouping">
                                     {reminder.text}
-                                    <button className="btn btn-danger">Delete</button>
+                                    <button className="btn btn-danger" onClick={() => this.deleteReminder(reminder.id)}>Delete</button>
                                 </div>
                                 
                             </li>
@@ -77,7 +81,7 @@ function mapStateToProps(state){
 
 //match functions with props
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({addReminder}, dispatch);
+    return bindActionCreators({ addReminder, deleteReminder}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

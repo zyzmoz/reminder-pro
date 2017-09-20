@@ -3,12 +3,15 @@ import './App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addReminder, deleteReminder } from '../actions';
+//tool to manipulate dates 
+import moment from 'moment';
 
 class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            text: ''
+            text: '',
+            dueDate: ''
         }
 
     }
@@ -16,7 +19,7 @@ class App extends Component{
     addReminder(){
         console.log('this', this);    
         if (this.state.text !== '')
-          this.props.addReminder(this.state.text);
+          this.props.addReminder(this.state.text, this.state.dueDate);
         this.setState({text:''});
         
     }
@@ -35,6 +38,7 @@ class App extends Component{
                             <li className="list-group-item" key={reminder.id}>
                                 <div className="grouping">
                                     {reminder.text}
+                                    <div>{moment(new Date(reminder.dueDate)).fromNow()}</div>
                                     <button className="btn btn-danger" onClick={() => this.deleteReminder(reminder.id)}>Delete</button>
                                 </div>
                                 
@@ -60,7 +64,11 @@ class App extends Component{
                             placeholder="I have to..."
                             onChange={e => this.setState({text: e.target.value})}
                             value={this.state.text}
-                        />                        
+                        />      
+                        <input className="form-control" 
+                               type="datetime-local"
+                               onChange={e => this.setState({dueDate: e.target.value})}
+                        />                  
                     </div>
                     <button type="button" className="btn btn-success add" onClick={() => this.addReminder()}>Add Reminder!</button>                    
                 </div>

@@ -1,9 +1,12 @@
 import { ADD_REMINDER, DELETE_REMINDER } from '../constants';
 
 const reminder = (action) => {
-    return {
-        text: action.text,
-        id: Math.random()
+    //get data from action object and matching with those names
+    let { text, dueDate } = action;
+    return {        
+        id: Math.random(),
+        text,
+        dueDate
     }
 }
 
@@ -17,6 +20,7 @@ const reminders = (state = [], action)  => {
     switch(action.type) {
         case ADD_REMINDER:
             reminders = [...state, reminder(action)];
+            localStorage.setItem('reminders', JSON.stringify(reminders));
             console.log('reminders state',reminders);
             return reminders;
         case DELETE_REMINDER:
